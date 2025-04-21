@@ -1,11 +1,13 @@
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 3000;
+FROM node:18-alpine
 
-app.get('/', (req, res) => {
-  res.send('Hello from Dockerized Node.js App!');
-});
+WORKDIR /app
 
-app.listen(port, () => {
-  console.log(`App running at http://localhost:${port}`);
-});
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["node", "index.js"]
+
